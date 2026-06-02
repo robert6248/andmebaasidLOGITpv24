@@ -1,6 +1,6 @@
 ## AndmebaasidLOGITpv24
 
-[Põhimõisted](readme.md) | [Kasutajad](Kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md)
+[Põhimõisted](readme.md) | [Kasutajad](Kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md)| [Keys](Keys.md)
 
 ## Sisukord
 - [Põhimõisted](#põhimõisted)

@@ -7,7 +7,7 @@
 - [SQL](#SQL)
 - [Piirangud](#Piirangud)
 - [Andmetüübid](#Andmetüübid)
-- [SQL protseduur](#SQLprotseduur)
+- [SQL protseduur](#SQL-protseduur)
 ## Põhimõisted
 - Andmebaasi haldussüsteemid - tarkvara, millega abil saab luua andmebaas (mariaDB - XAMPP, SQL Server - SQL Server Management Studio)
 - Andmebaas - struktureeritud andmete kogum
@@ -35,7 +35,7 @@
      3. date, time, datetime - kuupäev
      4. boolean, bit, bool - loogilised
      ```
-## SQL protseduur
+## SQL-protseduur
 store protsedure - salvestatud protseduurid - sama siis on funktsioonid programmerimises, mingi tegevus, mis on salvestatud andmebaasi, ja mida saab automaatselt teha (INSERT, SELECT, UPDATE).
 
 ## ALTER -

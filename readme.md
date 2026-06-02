@@ -2,8 +2,6 @@
 
 [Põhimõisted](readme.md) | [Kasutajad](kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md) | [trigerXAMPP](trigerXAMPP.md)
 
-admebaaside haldusega seotud sql kood ja konspektid
-
 ## Põhimõisted
 - Andmebaasi haldussüsteemid - tarkvara, millega abil saab luua andmebaas (mariaDB - XAMPP, SQL Server - SQL Server Management Studio)
 - Andmebaas - struktureeritud andmete kogum
@@ -33,3 +31,4 @@ admebaaside haldusega seotud sql kood ja konspektid
      ```
 ## SQL protseduur -
 store protsedure - salvestatud protseduurid - sama siis on funktsioonid programmerimises, mingi tegevus, mis on salvestatud andmebaasi, ja mida saab automaatselt teha (INSERT, SELECT, UPDATE).
+

@@ -4,6 +4,7 @@
 
 ## Sisukord
 [Põhimõisted](#põhimõisted)
+[SQL](SQL - structured quary language - struktureeritud päringu keel)
 
 ## Põhimõisted
 - Andmebaasi haldussüsteemid - tarkvara, millega abil saab luua andmebaas (mariaDB - XAMPP, SQL Server - SQL Server Management Studio)

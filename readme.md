@@ -8,6 +8,7 @@
 - [Piirangud](#Piirangud)
 - [Andmetüübid](#Andmetüübid)
 - [SQL protseduur](#SQL-protseduur)
+- [ALTER](#ALTER-)
 ## Põhimõisted
 - Andmebaasi haldussüsteemid - tarkvara, millega abil saab luua andmebaas (mariaDB - XAMPP, SQL Server - SQL Server Management Studio)
 - Andmebaas - struktureeritud andmete kogum
@@ -38,6 +39,6 @@
 ## SQL-protseduur
 store protsedure - salvestatud protseduurid - sama siis on funktsioonid programmerimises, mingi tegevus, mis on salvestatud andmebaasi, ja mida saab automaatselt teha (INSERT, SELECT, UPDATE).
 
-## ALTER -
+## ALTER-
 
 ALTER on SQL käsk, mida kasutatakse juba olemasoleva andmebaasi objekti muutmiseks. Kõige sagedamini kasutatakse seda tabelite muutmiseks käsuga ALTER TABLE. Selle käsuga saab muuta tabeli struktuuri, näiteks lisada uue veeru, muuta olemasoleva veeru andmetüüpi, kustutada veeru või lisada tabelile piiranguid. ALTER on vajalik siis, kui tabel on juba loodud, aga hiljem on vaja selle ehitust muuta.

@@ -1,6 +1,7 @@
 ## AndmebaasidLOGITpv24
 
 [Põhimõisted](readme.md) | [Kasutajad](kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md) | [trigerXAMPP](trigerXAMPP.md)
+
 admebaaside haldusega seotud sql kood ja konspektid
 
 ## Põhimõisted

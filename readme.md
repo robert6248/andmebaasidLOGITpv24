@@ -7,7 +7,7 @@
 - [SQL](#SQL)
 - [Piirangud](#Piirangud)
 - [Andmetüübid](#Andmetüübid)
-- [SQL protseduur](#SQL protseduur)
+- [SQL protseduur](#SQLprotseduur)
 ## Põhimõisted
 - Andmebaasi haldussüsteemid - tarkvara, millega abil saab luua andmebaas (mariaDB - XAMPP, SQL Server - SQL Server Management Studio)
 - Andmebaas - struktureeritud andmete kogum

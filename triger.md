@@ -16,7 +16,7 @@ SYSTEM_USER, --kasutaja mis on sisselogitud serverisse
 concat ('linn:', inserted.linnanimi, ', rahvaarv:', inserted.rahvaarv)  --andmed tabelisy linnad
 FROM inserted;
 ```
-<img width="1643" height="521" alt="{F8228776-0784-404D-91F7-1E7A3B3BBEB6}" src="https://github.com/user-attachments/assets/4740a03d-e7f5-4551-a063-a04ef58cb244" />
+<img width="562" height="183" alt="{C8FCA455-37F9-47D7-855F-354DA6667EBE}" src="https://github.com/user-attachments/assets/8823546b-9f4a-4273-b0bc-a81cea43646a" />
 
 Delete triger
 ```sql

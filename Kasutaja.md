@@ -1,3 +1,5 @@
+[Põhimõisted](readme.md) | [Kasutajad](Kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md) | [ALTER](ALTER.sql)
+
 SQL Server - Kasutajae autentimine ja õiguste haldamine
 Mis on autientimine SQL Serveris? SQL Serveris kasutatakse kahte peamist autentmise tüüpi:
 

@@ -1,6 +1,6 @@
 ## AndmebaasidLOGITpv24
 
-[Põhimõisted](readme.md) | [Kasutajad](kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md) | [trigerXAMPP](trigerXAMPP.md)
+[Põhimõisted](readme.md) | [Kasutajad](kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md) | [ALTER](ALTER.sql)
 
 ## Põhimõisted
 - Andmebaasi haldussüsteemid - tarkvara, millega abil saab luua andmebaas (mariaDB - XAMPP, SQL Server - SQL Server Management Studio)

@@ -3,9 +3,11 @@
 [Põhimõisted](readme.md) | [Kasutajad](Kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md)
 
 ## Sisukord
-[Põhimõisted](#põhimõisted)
-[SQL](#SQL)
-
+- [Põhimõisted](#põhimõisted)
+- [SQL](#SQL)
+- [Pirangud](#Piirangud)
+- [Andmetüübid](#Andmetüübid)
+- [SQL]
 ## Põhimõisted
 - Andmebaasi haldussüsteemid - tarkvara, millega abil saab luua andmebaas (mariaDB - XAMPP, SQL Server - SQL Server Management Studio)
 - Andmebaas - struktureeritud andmete kogum
@@ -21,7 +23,7 @@
   1. DDL - Data Definition Language
   2. DML - Data Manipulation Language
 
-     ## Piirangud - органичения - CONSTRAINT (5)
+     ## Piirangud
      1. PRIMARY KEY
      2. NOT NULL
      3. CHECK - valik
@@ -33,7 +35,7 @@
      3. date, time, datetime - kuupäev
      4. boolean, bit, bool - loogilised
      ```
-## SQL protseduur -
+## SQL protseduur
 store protsedure - salvestatud protseduurid - sama siis on funktsioonid programmerimises, mingi tegevus, mis on salvestatud andmebaasi, ja mida saab automaatselt teha (INSERT, SELECT, UPDATE).
 
 ## ALTER -

@@ -5,9 +5,9 @@
 ## Sisukord
 - [Põhimõisted](#põhimõisted)
 - [SQL](#SQL)
-- [Pirangud](#Piirangud)
+- [Piirangud](#Piirangud)
 - [Andmetüübid](#Andmetüübid)
-- [SQL]
+- [SQL protseduur](#SQL protseduur)
 ## Põhimõisted
 - Andmebaasi haldussüsteemid - tarkvara, millega abil saab luua andmebaas (mariaDB - XAMPP, SQL Server - SQL Server Management Studio)
 - Andmebaas - struktureeritud andmete kogum

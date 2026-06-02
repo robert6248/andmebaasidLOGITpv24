@@ -28,3 +28,5 @@ admebaaside haldusega seotud sql kood ja konspektid
      3. date, time, datetime - kuupäev
      4. boolean, bit, bool - loogilised
      ```
+## SQL protseduur -
+store protsedure - salvestatud protseduurid - sama siis on funktsioonid programmerimises, mingi tegevus, mis on salvestatud andmebaasi, ja mida saab automaatselt teha (INSERT, SELECT, UPDATE).

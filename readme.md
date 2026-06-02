@@ -15,7 +15,7 @@
 - Primaarne võti - primary key -PK- veerg, unikaalse identifikatooriga (tavaliselt nimetus id)
 - Välisvõti (võõrvõti) - foreign key - FK - veerg, mis loob seose teise tabeli primaarne võtmega
 
-## SQL - structured quary language - struktureeritud päringu keel
+## SQL
   - päring - запрос
   - <img width="427" height="339" alt="image" src="https://github.com/user-attachments/assets/e51d1e1c-af45-4551-81ff-fd6b12467944" />
   1. DDL - Data Definition Language

@@ -1,28 +1,25 @@
-# Triggerid
+Triggerid
 
-[Põhimõisted](readme.md) | [Kasutajad](Kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md) | [Keys](Keys.md)
+Põhimõisted | Kasutajad | Trigerid | Protseduurid | Keys
 
----
-
-## Mis on trigger?
+Mis on trigger?
 
 Trigger ehk päästik on SQL Serveri andmebaasi objekt, mis käivitub automaatselt siis, kui tabelis toimub kindel tegevus.
 
-Kõige tavalisemad tegevused on:
+Trigger võib käivituda näiteks siis, kui:
 
-* `INSERT` - andmete lisamine;
-* `DELETE` - andmete kustutamine;
-* `UPDATE` - andmete muutmine.
+tabelisse lisatakse uus kirje ehk INSERT;
+tabelist kustutatakse kirje ehk DELETE;
+tabelis muudetakse olemasolevat kirjet ehk UPDATE.
 
-Triggerit kasutatakse näiteks siis, kui on vaja salvestada, kes ja millal tabelis muudatusi tegi. Selles näites kasutatakse tabelit `linnad` ja logitabelit `logi`.
+Selles töös kasutatakse tabelit linnad ja logitabelit logi. Logitabelisse salvestatakse info selle kohta, milline tegevus andmebaasis toimus.
 
----
+INSERT trigger
+Eesmärk
 
-## INSERT trigger - andmete lisamise jälgimine
+INSERT trigger jälgib andmete lisamist tabelisse linnad. Kui tabelisse lisatakse uus linn, siis lisab trigger automaatselt uue kirje tabelisse logi.
 
-INSERT trigger käivitub siis, kui tabelisse `linnad` lisatakse uus kirje. Trigger võtab lisatud andmed ajutisest tabelist `inserted` ja salvestab need tabelisse `logi`.
-
-```sql
+SQL-kood
 CREATE TRIGGER linnaLisamine
 ON linnad
 FOR INSERT
@@ -34,25 +31,21 @@ SELECT
     'on tehtud INSERT käsk',
     CONCAT('linn: ', inserted.linnanimi, ', rahvaarv: ', inserted.rahvaarv)
 FROM inserted;
-```
+Selgitus
+GETDATE() lisab logisse kuupäeva ja kellaaja.
+SYSTEM_USER näitab kasutajat, kes käsu käivitas.
+inserted sisaldab uut lisatud rida.
+CONCAT paneb logi jaoks teksti kokku.
+Tulemus
 
-Selles koodis kasutatakse:
+Näites lisatakse tabelisse linnad uus kirje. Pärast seda tekib tabelisse logi automaatselt uus rida.
 
-* `GETDATE()` - salvestab tegevuse aja;
-* `SYSTEM_USER` - salvestab kasutaja nime;
-* `inserted` - näitab uut lisatud kirjet.
+DELETE trigger
+Eesmärk
 
-### Tulemus
+DELETE trigger jälgib andmete kustutamist tabelist linnad. Kui tabelist kustutatakse kirje, siis salvestatakse kustutatud andmed tabelisse logi.
 
-Pildil on näha, et pärast uue linna lisamist tekkis logitabelisse uus kirje.
-
----
-
-## DELETE trigger - kustutamise jälgimine
-
-DELETE trigger käivitub siis, kui tabelist `linnad` kustutatakse kirje. Kustutatud andmed võetakse ajutisest tabelist `deleted`.
-
-```sql
+SQL-kood
 CREATE TRIGGER linnaKustutamine
 ON linnad
 FOR DELETE
@@ -64,28 +57,25 @@ SELECT
     'on tehtud DELETE käsk',
     CONCAT('linn: ', deleted.linnanimi, ', rahvaarv: ', deleted.rahvaarv)
 FROM deleted;
-```
-
-Triggeri kontrollimiseks kustutatakse tabelist `linnad` üks rida.
-
-```sql
+Triggeri kontrollimine
 DELETE FROM linnad
 WHERE linnID = 3;
-```
+Selgitus
+deleted sisaldab kustutatud rea andmeid.
+Trigger salvestab kustutatud linna nime ja rahvaarvu logitabelisse.
+Nii on hiljem võimalik näha, milline kirje kustutati.
+Tulemus
 
-Selles näites kasutatakse `deleted` tabelit, sest SQL Server hoiab kustutatud rea andmeid seal ainult triggeri töö ajal.
+Pildil on näha, et pärast kustutamist tekkis tabelisse logi vastav kirje.
 
-### Tulemus
+Kombineeritud INSERT ja DELETE trigger
+Eesmärk
 
-Pildil on näha, et kustutamise kohta lisati tabelisse `logi` uus rida.
+Kombineeritud trigger jälgib mitut tegevust ühe triggeri sees. Selles näites jälgib trigger nii INSERT kui ka DELETE tegevust.
 
----
+Kui tabelisse lisatakse uus linn või tabelist kustutatakse linn, siis tehakse logitabelisse vastav kirje.
 
-## Kombineeritud trigger - INSERT ja DELETE koos
-
-Üks trigger võib jälgida ka mitut tegevust korraga. Selles näites jälgib trigger nii andmete lisamist kui ka kustutamist.
-
-```sql
+SQL-kood
 CREATE TRIGGER linnaLisaKustuta
 ON linnad
 FOR INSERT, DELETE
@@ -110,33 +100,29 @@ BEGIN
         CONCAT('linn: ', deleted.linnanimi, ', rahvaarv: ', deleted.rahvaarv)
     FROM deleted;
 END;
-```
+Selgitus
 
 Selles triggeris kasutatakse kahte ajutist tabelit:
 
-* `inserted` - kui lisatakse uus rida;
-* `deleted` - kui kustutatakse olemasolev rida.
+inserted - kui lisatakse uus kirje;
+deleted - kui kustutatakse kirje.
 
-`UNION ALL` ühendab mõlema tegevuse tulemused ja lisab need logitabelisse.
+UNION ALL ühendab mõlema tegevuse tulemused ja lisab need tabelisse logi.
 
-### Triggerid andmebaasis
+Triggerid tabelis
 
-Pildil on näha, et andmebaasis on loodud mitu triggerit.
+Pildil on näha, et andmebaasis on mitu loodud triggerit.
 
-### Kombineeritud triggeri kontroll
+Kombineeritud triggeri kontroll
 
-Pildil on näha, et kombineeritud trigger lisab logitabelisse kirje nii lisamise kui ka kustutamise korral.
+Pildil on näha, et kombineeritud trigger töötab ja salvestab tegevused logitabelisse.
 
----
+UPDATE trigger
+Eesmärk
 
-## UPDATE trigger - andmete muutmise jälgimine
+UPDATE trigger jälgib andmete muutmist tabelis linnad. Kui tabelis muudetakse linna nime või rahvaarvu, siis salvestab trigger tabelisse logi nii vanad kui ka uued andmed.
 
-UPDATE trigger käivitub siis, kui tabelis `linnad` muudetakse olemasolevat kirjet. Selle triggeri puhul kasutatakse korraga kahte ajutist tabelit:
-
-* `deleted` - vanad andmed enne muutmist;
-* `inserted` - uued andmed pärast muutmist.
-
-```sql
+SQL-kood
 CREATE TRIGGER linnaUuendamine
 ON linnad
 FOR UPDATE
@@ -155,25 +141,17 @@ SELECT
 FROM deleted
 INNER JOIN inserted
 ON deleted.linnID = inserted.linnID;
-```
+Selgitus
 
-`INNER JOIN` ühendab vana ja uue rea sama `linnID` järgi. Tänu sellele saab logisse kirjutada, mis väärtus oli enne ja mis väärtus tuli pärast muutmist.
+UPDATE trigger kasutab kahte ajutist tabelit:
 
-### Tulemus
+deleted - vanad andmed enne muutmist;
+inserted - uued andmed pärast muutmist.
 
-Pildil on näha, et pärast muutmist salvestati logitabelisse nii vanad kui ka uued andmed.
+INNER JOIN ühendab vana ja uue rea sama linnID järgi. Nii saab logitabelisse kirjutada, millised andmed muutusid.
 
----
+Tulemus
 
-## Lühike kokkuvõte triggeritest
+Pildil on näha, et pärast andmete muutmist salvestati logitabelisse vanad ja uued väärtused.
 
-| Trigger               | Millal käivitub?                 | Milleks kasutatakse?                      |
-| --------------------- | -------------------------------- | ----------------------------------------- |
-| INSERT trigger        | Kui lisatakse uus kirje          | Lisamise logimiseks                       |
-| DELETE trigger        | Kui kustutatakse kirje           | Kustutamise logimiseks                    |
-| UPDATE trigger        | Kui muudetakse kirjet            | Vanade ja uute andmete salvestamiseks     |
-| Kombineeritud trigger | Kui toimub mitu valitud tegevust | Mitme tegevuse jälgimiseks ühe triggeriga |
 
----
-
-##

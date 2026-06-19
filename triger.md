@@ -218,17 +218,4 @@ Pildil on näha, et pärast andmete muutmist salvestati logitabelisse vanad ja u
 
 ---
 
-# Kokkuvõte
 
-Selles töös õppisin, kuidas SQL Serveris triggerid töötavad. Trigger käivitub automaatselt, kui tabelis toimub `INSERT`, `DELETE` või `UPDATE` tegevus.
-
-Triggerite abil saab:
-
-* jälgida andmete lisamist;
-* jälgida andmete kustutamist;
-* jälgida andmete muutmist;
-* salvestada kõik tegevused logitabelisse.
-
-Selline lahendus võimaldab pidada arvestust andmebaasis toimunud muudatuste üle ning lihtsustab vigade ja muudatuste hilisemat kontrollimist.
-
----

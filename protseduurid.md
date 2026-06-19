@@ -55,7 +55,7 @@ Protseduuri käivitamine:
 EXEC lisaKategooria 'Telefonid';
 ```
 
-### Tulemus
+<img width="356" height="137" alt="image" src="https://github.com/user-attachments/assets/6bbea265-0e03-4e4d-85a1-ea5d0bfb4b56" />
 
 ---
 
@@ -83,7 +83,7 @@ Protseduuri käivitamine:
 EXEC kustutaKategooria 1;
 ```
 
-### Tulemus
+<img width="321" height="265" alt="image" src="https://github.com/user-attachments/assets/ffa65c36-35cd-4822-ad59-ed422cacfd66" />
 
 ---
 
@@ -107,7 +107,7 @@ Protseduuri käivitamine:
 EXEC otsingitaht 'A';
 ```
 
-### Tulemus
+<img width="300" height="124" alt="image" src="https://github.com/user-attachments/assets/3787a3e3-34ca-4ed4-b096-511b4b4997dd" />
 
 ---
 
@@ -129,7 +129,7 @@ VALUES ('Nokia');
 SELECT * FROM brands;
 ```
 
-### Tulemus
+<img width="487" height="124" alt="image" src="https://github.com/user-attachments/assets/c9ceeed7-d283-4fed-970e-aa34ff82991f" />
 
 ---
 
@@ -159,7 +159,7 @@ VALUES ('nutitelefon 10', 1, 3, 2025, 500);
 SELECT * FROM products;
 ```
 
-### Tulemus
+<img width="531" height="246" alt="image" src="https://github.com/user-attachments/assets/5a2ba2f5-a4aa-4f48-83f5-5f9962d48ffb" />
 
 ---
 
@@ -206,7 +206,7 @@ Veeru kustutamine:
 EXEC muudatus 'drop', 'categories', 'TestVeerg';
 ```
 
-### Tulemus
+<img width="576" height="179" alt="image" src="https://github.com/user-attachments/assets/0c364e5b-1a04-4d2b-92b2-5a8c25ebba4c" />
 
 ---
 
@@ -242,7 +242,7 @@ VALUES ('Ada Vong', 'Tartu', 55, 14.8);
 SELECT * FROM klient;
 ```
 
-### Tulemus
+<img width="518" height="165" alt="image" src="https://github.com/user-attachments/assets/3fbb5fa8-b788-4667-bd7b-aa0d0bc5af40" />
 
 ---
 
@@ -428,8 +428,4 @@ SELECT * FROM klient;
 
 ---
 
-# Kokkuvõte
 
-Selles töös õppisin kasutama SQL protseduure andmete lisamiseks, muutmiseks, kustutamiseks ja otsimiseks. Samuti õppisin looma protseduure, mis muudavad tabeli struktuuri ning kasutavad parameetreid ja dünaamilist SQL-i.
-
-Lisaks sain aru erinevusest SQL Serveri ja XAMPP/MySQL-i vahel: SQL Serveris kasutatakse automaatse ID loomiseks `IDENTITY`, samas kui MySQL-is kasutatakse `AUTO_INCREMENT`.

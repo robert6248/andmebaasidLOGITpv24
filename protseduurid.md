@@ -1,18 +1,41 @@
-[Põhimõisted](readme.md) | [Kasutajad](Kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md)| [Keys](Keys.md)
+# Protseduurid
 
-## Sissukord
+[Põhimõisted](readme.md) | [Kasutajad](Kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md) | [Keys](Keys.md)
+
+---
+
+## Sisukord
 
 * [SQL protseduur](#sql-protseduur)
-* [Hindeline ülesanne](#hindeline-ülesanne)
-* [Hindeline ülesanne XAMPP](#hindeline-ülesanne-xampp)
+* [Kategooriate protseduurid](#kategooriate-protseduurid)
+* [Brands ja products tabelid](#brands-ja-products-tabelid)
+* [Tabeli muutmise protseduur](#tabeli-muutmise-protseduur)
+* [Hindeline ülesanne SQL Serveris](#hindeline-ülesanne-sql-serveris)
+* [Hindeline ülesanne XAMPP-is](#hindeline-ülesanne-xampp-is)
 
 ---
 
 # SQL protseduur
 
-Stored procedure ehk salvestatud protseduur on andmebaasis salvestatud SQL-käskude kogum. Seda saab kasutada korduvate tegevuste tegemiseks, näiteks andmete lisamiseks, muutmiseks, kustutamiseks või otsimiseks.
+Stored procedure ehk salvestatud protseduur on andmebaasis salvestatud SQL-käskude kogum. Protseduuri kasutatakse siis, kui sama tegevust on vaja teha mitu korda.
+
+Protseduuriga saab näiteks:
+
+* lisada andmeid;
+* kustutada andmeid;
+* muuta andmeid;
+* otsida andmeid;
+* muuta tabeli struktuuri.
+
+Protseduuri eelis on see, et kõiki SQL-käske ei pea iga kord uuesti kirjutama. Piisab protseduuri käivitamisest.
+
+---
+
+# Kategooriate protseduurid
 
 ## Protseduur kategooria lisamiseks
+
+See protseduur lisab tabelisse `categories` uue kategooria. Uus kategooria antakse protseduurile parameetrina.
 
 ```sql
 CREATE PROCEDURE lisaKategooria
@@ -26,15 +49,19 @@ BEGIN
 END;
 ```
 
-**SIIA LISA PILT: kategooria lisamise protseduur**
+Protseduuri käivitamine:
 
-**SIIA LISA PILT: kategooria lisamise tulemus**
+```sql
+EXEC lisaKategooria 'Telefonid';
+```
+
+### Tulemus
 
 ---
 
 ## Protseduur kategooria kustutamiseks
 
-See protseduur kustutab kategooria ID järgi.
+See protseduur kustutab kategooria ID järgi. Enne ja pärast kustutamist kuvatakse tabeli sisu.
 
 ```sql
 CREATE PROCEDURE kustutaKategooria
@@ -56,11 +83,13 @@ Protseduuri käivitamine:
 EXEC kustutaKategooria 1;
 ```
 
+### Tulemus
+
 ---
 
 ## Protseduur otsimiseks tähe järgi
 
-See protseduur otsib kategooriaid esimese tähe järgi.
+See protseduur otsib kategooriaid esimese tähe järgi. Näiteks saab otsida kõik kategooriad, mis algavad tähega `A`.
 
 ```sql
 CREATE PROCEDURE otsingitaht
@@ -72,15 +101,21 @@ BEGIN
 END;
 ```
 
-Näide:
+Protseduuri käivitamine:
 
 ```sql
 EXEC otsingitaht 'A';
 ```
 
+### Tulemus
+
 ---
 
+# Brands ja products tabelid
+
 ## Tabel brands
+
+Tabel `brands` salvestab brändide nimed. Veerg `brand_id` on primaarvõti ja `brand_name` peab olema unikaalne.
 
 ```sql
 CREATE TABLE brands (
@@ -94,11 +129,16 @@ VALUES ('Nokia');
 SELECT * FROM brands;
 ```
 
-**SIIA LISA PILT: brands tabel**
+### Tulemus
 
 ---
 
 ## Tabel products
+
+Tabel `products` salvestab toodete andmed. Selles tabelis on kaks võõrvõtit:
+
+* `brand_id` viitab tabelile `brands`;
+* `category_id` viitab tabelile `categories`.
 
 ```sql
 CREATE TABLE products (
@@ -119,13 +159,15 @@ VALUES ('nutitelefon 10', 1, 3, 2025, 500);
 SELECT * FROM products;
 ```
 
-**SIIA LISA PILT: products tabel**
+### Tulemus
 
 ---
 
-## Protseduur tabeli muutmiseks
+# Tabeli muutmise protseduur
 
-See protseduur kasutab `ALTER TABLE` käsku. Sellega saab tabelisse veeru lisada või veeru kustutada.
+See protseduur kasutab `ALTER TABLE` käsku. Selle abil saab tabelisse lisada uue veeru või kustutada olemasoleva veeru.
+
+Protseduur kasutab dünaamilist SQL-i, sest tabeli nimi ja veeru nimi antakse parameetritena.
 
 ```sql
 CREATE PROCEDURE muudatus
@@ -150,29 +192,33 @@ BEGIN
 END;
 ```
 
-Näited:
+Veeru lisamine:
 
 ```sql
 EXEC muudatus 'add', 'categories', 'TestVeerg', 'int';
 
 SELECT * FROM categories;
+```
 
+Veeru kustutamine:
+
+```sql
 EXEC muudatus 'drop', 'categories', 'TestVeerg';
 ```
 
-**SIIA LISA PILT: ALTER TABLE protseduuri tulemus**
+### Tulemus
 
 ---
 
-# Hindeline ülesanne
+# Hindeline ülesanne SQL Serveris
 
-## Algus
+## Andmebaasi ja tabeli loomine
 
-Töö alguses lõin uue andmebaasi ja kasutasin seda.
+Töö alguses lõin uue andmebaasi ja valisin selle kasutamiseks.
 
 ```sql
-CREATE DATABASE ProtseduriMelnikov;
-USE ProtseduriMelnikov;
+CREATE DATABASE ProtseduurRobert;
+USE ProtseduurRobert;
 ```
 
 Seejärel lõin tabeli `klient`.
@@ -192,15 +238,11 @@ Lisasin tabelisse ühe kliendi.
 ```sql
 INSERT INTO klient(nimi, linn, vanus, saldo)
 VALUES ('Ada Vong', 'Tartu', 55, 14.8);
-```
 
-Tabeli vaatamiseks kasutasin:
-
-```sql
 SELECT * FROM klient;
 ```
 
-**SIIA LISA PILT: klient tabel pärast andmete lisamist**
+### Tulemus
 
 ---
 
@@ -222,8 +264,6 @@ Käivitamine:
 ```sql
 EXEC KuvaKliendid;
 ```
-
-**SIIA LISA PILT: KuvaKliendid tulemus**
 
 ---
 
@@ -254,6 +294,12 @@ EXEC LisaKlient
     @saldo = 120.00;
 ```
 
+Kontroll:
+
+```sql
+SELECT * FROM klient;
+```
+
 ---
 
 ## Protseduur kliendi muutmiseks
@@ -278,9 +324,9 @@ Käivitamine:
 EXEC MuudaKlient
     @id = 5,
     @linn = 'Maardu';
-```
 
-**SIIA LISA PILT: kliendi andmed pärast muutmist**
+SELECT * FROM klient;
+```
 
 ---
 
@@ -302,11 +348,9 @@ Käivitamine:
 
 ```sql
 EXEC KustutaKlient @id = 4;
+
+SELECT * FROM klient;
 ```
-
-**SIIA LISA PILT: enne kustutamist**
-
-**SIIA LISA PILT: pärast kustutamist**
 
 ---
 
@@ -331,15 +375,11 @@ Käivitamine:
 EXEC OtsiKlient @nimi = 'J';
 ```
 
-**SIIA LISA PILT: otsingu tulemus**
-
-**SIIA LISA PILT: otsingu tulemus ühe tähega**
-
 ---
 
 ## Protseduur kliendi tüübi kuvamiseks
 
-See protseduur näitab, kas klient on hea klient või tavaklient.
+See protseduur näitab saldo järgi, kas klient on hea klient või tavaklient.
 
 ```sql
 CREATE PROCEDURE KuvaKliendiTyyp
@@ -365,7 +405,7 @@ EXEC KuvaKliendiTyyp;
 
 ---
 
-# Hindeline ülesanne XAMPP
+# Hindeline ülesanne XAMPP-is
 
 ## Tabel klient
 
@@ -382,6 +422,10 @@ CREATE TABLE klient (
 
 INSERT INTO klient(nimi, linn, vanus, saldo)
 VALUES ('Ada Vong', 'Tartu', 55, 14.80);
+
+SELECT * FROM klient;
 ```
 
-**SIIA LISA PILT: klient tabel XAMPP-is**
+---
+
+#

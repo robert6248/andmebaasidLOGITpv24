@@ -39,7 +39,7 @@ VALUES ('Robert', 18), ('Mark', 17), ('Daniil', 18);
 SELECT * FROM kasutaja;
 ```
 
-Lisaks on tabeli struktuuris näha, et `kasutaja_id` juures on võtme märk.
+<img width="532" height="413" alt="Primary Key näide" src="https://github.com/user-attachments/assets/737be006-4d8b-45d7-a427-935d1b50fcb3" />
 
 ---
 
@@ -79,12 +79,16 @@ VALUES ('Pizza', 1), ('Burger', 2);
 SELECT * FROM toit;
 ```
 
+<img width="593" height="375" alt="Foreign Key näide" src="https://github.com/user-attachments/assets/07b61bd5-c425-48f3-b9ca-7963aaf1df48" />
+
 Kui proovida lisada toitu kasutajale, kelle `kasutaja_id` on 4, tekib viga, sest sellist kasutajat tabelis `kasutaja` ei ole.
 
 ```sql
 INSERT INTO toit
 VALUES ('Sushi', 4);
 ```
+
+<img width="1311" height="177" alt="Foreign Key viga" src="https://github.com/user-attachments/assets/2e418c0f-723b-47f0-9b4a-5e962250d243" />
 
 ---
 
@@ -122,12 +126,16 @@ VALUES ('Auto'), ('Maja');
 SELECT * FROM sonaraamat;
 ```
 
+<img width="411" height="387" alt="Unique Key näide" src="https://github.com/user-attachments/assets/1970725d-1297-4e9d-af8b-5f19bda381fa" />
+
 Kui proovida lisada sama sõna uuesti, tekib Unique Key viga.
 
 ```sql
 INSERT INTO sonaraamat
 VALUES ('Auto');
 ```
+
+<img width="1247" height="203" alt="Unique Key viga" src="https://github.com/user-attachments/assets/4d1a9df8-913a-45e4-a9c3-7cbeab63c6c8" />
 
 ---
 
@@ -165,12 +173,16 @@ VALUES (1, 'Koer'), (2, 'Kass');
 SELECT * FROM loomad;
 ```
 
+<img width="360" height="386" alt="Simple Key näide" src="https://github.com/user-attachments/assets/964692a6-0acc-409e-a024-be6f493201b6" />
+
 Kui proovida lisada sama `looma_id` uuesti, tekib viga.
 
 ```sql
 INSERT INTO loomad
 VALUES (2, 'Hamster');
 ```
+
+<img width="1192" height="252" alt="Simple Key viga" src="https://github.com/user-attachments/assets/a5c93748-8536-4757-b7d0-002cb8058f10" />
 
 ---
 
@@ -210,12 +222,16 @@ VALUES (1, 1, 2), (1, 2, 1), (2, 1, 3);
 SELECT * FROM tellimus;
 ```
 
+<img width="455" height="446" alt="Composite Key näide" src="https://github.com/user-attachments/assets/bfe5e44b-e6e4-49fb-be85-e9849fcc5a5d" />
+
 Kui proovida lisada sama kombinatsioon `(1, 1)` uuesti, tekib Primary Key viga.
 
 ```sql
 INSERT INTO tellimus
 VALUES (1, 1, 5);
 ```
+
+<img width="1240" height="242" alt="Composite Key viga" src="https://github.com/user-attachments/assets/d2196755-49f9-4be5-9071-447c3fe8df97" />
 
 ---
 
@@ -254,6 +270,8 @@ VALUES (1, 1), (2, 2);
 SELECT * FROM opilane_kursus;
 ```
 
+<img width="390" height="346" alt="Compound Key esimene tabel" src="https://github.com/user-attachments/assets/c1192dad-e741-4bab-9e27-fccb17f9c661" />
+
 Seejärel luuakse tabel `hinne`, kus kasutatakse võõrvõtit kahe veeru põhjal.
 
 ```sql
@@ -272,12 +290,16 @@ VALUES (1, 1, 5), (2, 2, 4);
 SELECT * FROM hinne;
 ```
 
+<img width="540" height="400" alt="Compound Key teine tabel" src="https://github.com/user-attachments/assets/b5710696-03b3-41c0-b158-ff6385d0688b" />
+
 Kui proovida lisada kombinatsioon, mida tabelis `opilane_kursus` ei ole, tekib Foreign Key viga.
 
 ```sql
 INSERT INTO hinne
 VALUES (1, 2, 5);
 ```
+
+<img width="1131" height="247" alt="Compound Key viga" src="https://github.com/user-attachments/assets/033650a1-f03f-4b69-85b5-5873fb7e1fb0" />
 
 ---
 
@@ -322,6 +344,8 @@ SELECT * FROM inimene WHERE email = 'mark@gmail.com';
 SELECT * FROM inimene WHERE id = 3 AND email = 'daniil@gmail.com';
 ```
 
+<img width="632" height="995" alt="Superkey näide" src="https://github.com/user-attachments/assets/ffbb682b-4927-43f3-86de-2c0eb2a98799" />
+
 Näiteks `id + email` on Superkey, sest selle abil saab rea unikaalselt leida. Samas on seal üks üleliigne veerg, sest ainult `id` oleks juba piisav.
 
 ---
@@ -364,6 +388,8 @@ VALUES
 
 SELECT * FROM telefon;
 ```
+
+<img width="436" height="522" alt="Candidate Key näide" src="https://github.com/user-attachments/assets/52af0e17-12d3-4faa-9329-a6e5ce14dfd6" />
 
 `tel_id` sobib kandidaadvõtmeks, sest selle abil saab iga rea eraldi tuvastada.
 
@@ -409,6 +435,8 @@ VALUES
 SELECT * FROM telefon_alt;
 ```
 
+<img width="450" height="486" alt="Alternate Key näide" src="https://github.com/user-attachments/assets/0a9fcf29-8167-4836-9f75-9f95095502d9" />
+
 Selles tabelis on `tel_id` Primary Key. Teised unikaalsed veerud on Alternate Key näited.
 
 ---
@@ -419,4 +447,40 @@ Selles töös õppisin erinevaid andmebaasi võtmeid. Primary Key tuvastab tabel
 
 ---
 
-##
+## Kasutatud allikad
+
+* Microsoft Learn - Primary and Foreign Key Constraints
+  https://learn.microsoft.com/en-us/sql/relational-databases/tables/primary-and-foreign-key-constraints
+
+* Microsoft Learn - Unique Constraints
+  https://learn.microsoft.com/en-us/sql/relational-databases/tables/unique-constraints-and-check-constraints
+
+* W3Schools - SQL Primary Key
+  https://www.w3schools.com/sql/sql_primarykey.asp
+
+* W3Schools - SQL Foreign Key
+  https://www.w3schools.com/sql/sql_foreignkey.asp
+
+* W3Schools - SQL Unique
+  https://www.w3schools.com/sql/sql_unique.asp
+
+
+<img width="532" height="413" alt="Снимок экрана 2026-06-19 074618" src="https://github.com/user-attachments/assets/737be006-4d8b-45d7-a427-935d1b50fcb3" />
+<img width="593" height="375" alt="image" src="https://github.com/user-attachments/assets/07b61bd5-c425-48f3-b9ca-7963aaf1df48" />
+<img width="1311" height="177" alt="image" src="https://github.com/user-attachments/assets/2e418c0f-723b-47f0-9b4a-5e962250d243" />
+<img width="411" height="387" alt="image" src="https://github.com/user-attachments/assets/1970725d-1297-4e9d-af8b-5f19bda381fa" />
+<img width="1247" height="203" alt="image" src="https://github.com/user-attachments/assets/4d1a9df8-913a-45e4-a9c3-7cbeab63c6c8" />
+<img width="360" height="386" alt="image" src="https://github.com/user-attachments/assets/964692a6-0acc-409e-a024-be6f493201b6" />
+<img width="1192" height="252" alt="image" src="https://github.com/user-attachments/assets/a5c93748-8536-4757-b7d0-002cb8058f10" />
+<img width="455" height="446" alt="image" src="https://github.com/user-attachments/assets/bfe5e44b-e6e4-49fb-be85-e9849fcc5a5d" />
+<img width="1240" height="242" alt="image" src="https://github.com/user-attachments/assets/d2196755-49f9-4be5-9071-447c3fe8df97" />
+<img width="390" height="346" alt="image" src="https://github.com/user-attachments/assets/c1192dad-e741-4bab-9e27-fccb17f9c661" />
+<img width="540" height="400" alt="image" src="https://github.com/user-attachments/assets/b5710696-03b3-41c0-b158-ff6385d0688b" />
+<img width="1131" height="247" alt="image" src="https://github.com/user-attachments/assets/033650a1-f03f-4b69-85b5-5873fb7e1fb0" />
+<img width="632" height="995" alt="image" src="https://github.com/user-attachments/assets/ffbb682b-4927-43f3-86de-2c0eb2a98799" />
+<img width="436" height="522" alt="image" src="https://github.com/user-attachments/assets/52af0e17-12d3-4faa-9329-a6e5ce14dfd6" />
+<img width="450" height="486" alt="image" src="https://github.com/user-attachments/assets/0a9fcf29-8167-4836-9f75-9f95095502d9" />
+
+
+
+

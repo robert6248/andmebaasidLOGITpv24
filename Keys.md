@@ -1,344 +1,422 @@
 # Andmebaasi võtmed (Keys)
 
-## Sissejuhatus
-
-Selles töös selgitan andmebaasi võtmete põhimõisteid. Võtmeid kasutatakse tabelites selleks, et andmeid oleks võimalik üheselt tuvastada, siduda ja kontrollida. Näited on tehtud SQL Serveris.
+[Põhimõisted](README.md) | [Protseduurid](protseduurid.md) | [Kasutajad](kasutaja.md) | [Trigerid](triger.md) | [Keys](keys.md)
 
 ---
 
-## 1. Primary Key
+## Primary Key
 
-**Definitsioon:**
-Primary Key ehk primaarvõti on väli või väljade kombinatsioon, mis tuvastab iga tabeli rea üheselt.
+### Definitsioon
 
-**Milleks kasutatakse:**
-Seda kasutatakse selleks, et igal real oleks oma kindel tunnus. Primary Key väärtus ei tohi korduda ega olla `NULL`.
+Primary Key ehk primaarvõti on veerg või veergude kogum, mis identifitseerib iga tabeli rea unikaalselt. Primaarvõtme väärtus ei tohi korduda ega olla `NULL`.
 
-**Erinevus teistest võtmetest:**
-Tabelis saab olla ainult üks Primary Key, aga see võib koosneda ühest või mitmest veerust.
+### Kasutus
 
-**SQL näide:**
+* Iga rea unikaalseks tuvastamiseks.
+* Tabeli põhiidentifikaatorina.
+* Seoste loomiseks teiste tabelitega.
+
+### Erinevus
+
+* Tabelis saab olla ainult üks Primary Key.
+* Väärtused peavad olema unikaalsed.
+* Väärtus ei tohi olla tühi ehk `NULL`.
+
+### Näide
+
+Selles näites on tabelis `kasutaja` primaarvõtmeks `kasutaja_id`.
 
 ```sql
-IF OBJECT_ID('dbo.Opilased_PK', 'U') IS NOT NULL
-DROP TABLE dbo.Opilased_PK;
-
-CREATE TABLE Opilased_PK (
-    opilane_id INT IDENTITY(1,1),
-    eesnimi VARCHAR(50),
-    perenimi VARCHAR(50),
-    CONSTRAINT PK_Opilased_PK PRIMARY KEY (opilane_id)
+CREATE TABLE kasutaja(
+    kasutaja_id INT PRIMARY KEY IDENTITY(1,1),
+    kasutaja_nimi VARCHAR(30),
+    vanus INT
 );
 
-EXEC sp_help 'Opilased_PK';
+INSERT INTO kasutaja
+VALUES ('Robert', 18), ('Mark', 17), ('Daniil', 18);
+
+SELECT * FROM kasutaja;
 ```
 
-**Lisa siia ekraanipilt, kus on näha loodud Primary Key.**
+Lisaks on tabeli struktuuris näha, et `kasutaja_id` juures on võtme märk.
 
 ---
 
-## 2. Foreign Key
+## Foreign Key
 
-**Definitsioon:**
+### Definitsioon
+
 Foreign Key ehk võõrvõti on veerg, mis viitab teise tabeli Primary Key väärtusele.
 
-**Milleks kasutatakse:**
-Seda kasutatakse tabelite omavaheliseks sidumiseks. Näiteks tellimus saab olla seotud kindla õpilasega.
+### Kasutus
 
-**Erinevus teistest võtmetest:**
-Foreign Key ei pea olema unikaalne. Selle eesmärk on luua seos kahe tabeli vahel.
+* Tabelite omavaheliseks sidumiseks.
+* Andmete terviklikkuse tagamiseks.
+* Vigaste seoste vältimiseks.
 
-**SQL näide:**
+### Erinevus
+
+* Foreign Key võib korduda.
+* See viitab teise tabeli võtmele.
+* See ei luba lisada väärtust, mida seotud tabelis ei ole.
+
+### Näide
+
+Tabel `toit` kasutab veergu `kasutaja_id`, mis viitab tabelile `kasutaja`.
 
 ```sql
-IF OBJECT_ID('dbo.Tellimused_FK', 'U') IS NOT NULL
-DROP TABLE dbo.Tellimused_FK;
-
-CREATE TABLE Tellimused_FK (
-    tellimus_id INT IDENTITY(1,1),
-    opilane_id INT NOT NULL,
-    toode VARCHAR(50),
-    CONSTRAINT PK_Tellimused_FK PRIMARY KEY (tellimus_id),
-    CONSTRAINT FK_Tellimused_Opilased FOREIGN KEY (opilane_id)
-    REFERENCES Opilased_PK(opilane_id)
+CREATE TABLE toit(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    toidu_nimi VARCHAR(30),
+    kasutaja_id INT,
+    FOREIGN KEY (kasutaja_id) REFERENCES kasutaja(kasutaja_id)
 );
 
-EXEC sp_help 'Tellimused_FK';
+INSERT INTO toit
+VALUES ('Pizza', 1), ('Burger', 2);
+
+SELECT * FROM toit;
 ```
 
-**Lisa siia ekraanipilt, kus on näha loodud Foreign Key.**
+Kui proovida lisada toitu kasutajale, kelle `kasutaja_id` on 4, tekib viga, sest sellist kasutajat tabelis `kasutaja` ei ole.
+
+```sql
+INSERT INTO toit
+VALUES ('Sushi', 4);
+```
 
 ---
 
-## 3. Unique Key
+## Unique Key
 
-**Definitsioon:**
-Unique Key on piirang, mis tagab, et veeru väärtused ei kordu.
+### Definitsioon
 
-**Milleks kasutatakse:**
-Seda kasutatakse näiteks e-posti, isikukoodi või kasutajanime puhul, sest need peavad olema unikaalsed.
+Unique Key on piirang, mis tagab, et ühe veeru väärtused ei kordu.
 
-**Erinevus teistest võtmetest:**
-Tabelis saab olla mitu Unique Key piirangut, aga ainult üks Primary Key.
+### Kasutus
 
-**SQL näide:**
+* Duplikaatide vältimiseks.
+* Näiteks emaili, kasutajanime või sõna unikaalsuse kontrollimiseks.
+* Andmete korrektsuse tagamiseks.
+
+### Erinevus
+
+* Tabelis võib olla mitu Unique Key piirangut.
+* Primary Key on tabeli põhiline võti, aga Unique Key on lisapiirang.
+* Unique Key ei ole alati tabeli peamine identifikaator.
+
+### Näide
+
+Tabelis `sonaraamat` peab veerg `sona` olema unikaalne.
 
 ```sql
-IF OBJECT_ID('dbo.Kasutajad_UQ', 'U') IS NOT NULL
-DROP TABLE dbo.Kasutajad_UQ;
-
-CREATE TABLE Kasutajad_UQ (
-    kasutaja_id INT IDENTITY(1,1),
-    email VARCHAR(100) NOT NULL,
-    kasutajanimi VARCHAR(50) NOT NULL,
-    CONSTRAINT PK_Kasutajad_UQ PRIMARY KEY (kasutaja_id),
-    CONSTRAINT UQ_Kasutajad_Email UNIQUE (email),
-    CONSTRAINT UQ_Kasutajad_Kasutajanimi UNIQUE (kasutajanimi)
+CREATE TABLE sonaraamat(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    sona VARCHAR(30) UNIQUE
 );
 
-EXEC sp_help 'Kasutajad_UQ';
+INSERT INTO sonaraamat
+VALUES ('Auto'), ('Maja');
+
+SELECT * FROM sonaraamat;
 ```
 
-**Lisa siia ekraanipilt, kus on näha Unique Key.**
+Kui proovida lisada sama sõna uuesti, tekib Unique Key viga.
+
+```sql
+INSERT INTO sonaraamat
+VALUES ('Auto');
+```
 
 ---
 
-## 4. Simple Key
+## Simple Key
 
-**Definitsioon:**
+### Definitsioon
+
 Simple Key on võti, mis koosneb ainult ühest veerust.
 
-**Milleks kasutatakse:**
-Seda kasutatakse siis, kui ühest veerust piisab rea üheseks tuvastamiseks.
+### Kasutus
 
-**Erinevus teistest võtmetest:**
-Simple Key koosneb ühest veerust, aga Composite Key koosneb mitmest veerust.
+* Lihtsates tabelites rea tuvastamiseks.
+* Kui ühest veerust piisab unikaalsuse jaoks.
+* Näiteks `id`, `isikukood` või `looma_id`.
 
-**SQL näide:**
+### Erinevus
+
+* Simple Key koosneb ühest veerust.
+* Composite Key koosneb mitmest veerust.
+* Simple Key on kõige lihtsam võtme tüüp.
+
+### Näide
+
+Tabelis `loomad` on Simple Key veerg `looma_id`.
 
 ```sql
-IF OBJECT_ID('dbo.SimpleKey_Naide', 'U') IS NOT NULL
-DROP TABLE dbo.SimpleKey_Naide;
-
-CREATE TABLE SimpleKey_Naide (
-    isikukood VARCHAR(11) NOT NULL,
-    nimi VARCHAR(50),
-    CONSTRAINT PK_SimpleKey PRIMARY KEY (isikukood)
+CREATE TABLE loomad(
+    looma_id INT PRIMARY KEY,
+    looma_nimi VARCHAR(30)
 );
 
-EXEC sp_help 'SimpleKey_Naide';
+INSERT INTO loomad
+VALUES (1, 'Koer'), (2, 'Kass');
+
+SELECT * FROM loomad;
 ```
 
-**Lisa siia ekraanipilt, kus on näha Simple Key.**
+Kui proovida lisada sama `looma_id` uuesti, tekib viga.
+
+```sql
+INSERT INTO loomad
+VALUES (2, 'Hamster');
+```
 
 ---
 
-## 5. Composite Key
+## Composite Key
 
-**Definitsioon:**
-Composite Key on võti, mis koosneb kahest või rohkemast veerust.
+### Definitsioon
 
-**Milleks kasutatakse:**
-Seda kasutatakse siis, kui üks veerg üksi ei tuvasta rida piisavalt täpselt.
+Composite Key on võti, mis koosneb kahest või rohkemast veerust. Unikaalne peab olema nende veergude kombinatsioon.
 
-**Erinevus teistest võtmetest:**
-Composite Key kasutab mitut veergu. Need veerud ei pea olema võõrvõtmed.
+### Kasutus
 
-**SQL näide:**
+* Kui üks veerg ei ole piisav rea tuvastamiseks.
+* Tellimuste, kursuste või seostabelite puhul.
+* Mitme välja põhjal unikaalse kirje loomiseks.
+
+### Erinevus
+
+* Koosneb mitmest veerust.
+* Üksikud veerud võivad korduda.
+* Korduda ei tohi terve veergude kombinatsioon.
+
+### Näide
+
+Tabelis `tellimus` moodustavad primaarvõtme veerud `tellimuse_id` ja `toote_id`.
 
 ```sql
-IF OBJECT_ID('dbo.Ruumide_Ajad', 'U') IS NOT NULL
-DROP TABLE dbo.Ruumide_Ajad;
-
-CREATE TABLE Ruumide_Ajad (
-    ruum_nr VARCHAR(10) NOT NULL,
-    kuupaev DATE NOT NULL,
-    algus TIME NOT NULL,
-    tegevus VARCHAR(50),
-    CONSTRAINT PK_Ruumide_Ajad PRIMARY KEY (ruum_nr, kuupaev, algus)
+CREATE TABLE tellimus(
+    tellimuse_id INT,
+    toote_id INT,
+    kogus INT,
+    PRIMARY KEY (tellimuse_id, toote_id)
 );
 
-EXEC sp_help 'Ruumide_Ajad';
+INSERT INTO tellimus
+VALUES (1, 1, 2), (1, 2, 1), (2, 1, 3);
+
+SELECT * FROM tellimus;
 ```
 
-**Lisa siia ekraanipilt, kus on näha Composite Key.**
+Kui proovida lisada sama kombinatsioon `(1, 1)` uuesti, tekib Primary Key viga.
+
+```sql
+INSERT INTO tellimus
+VALUES (1, 1, 5);
+```
 
 ---
 
-## 6. Compound Key
+## Compound Key
 
-**Definitsioon:**
-Compound Key on mitmest veerust koosnev võti, kus veerud on tavaliselt seotud teiste tabelitega ehk on võõrvõtmed.
+### Definitsioon
 
-**Milleks kasutatakse:**
-Seda kasutatakse näiteks seostabelis, kus üks õpilane saab olla mitmel kursusel ja üks kursus saab olla mitmel õpilasel.
+Compound Key on mitmest veerust koosnev võti, kus veerud on tavaliselt seotud teiste tabelitega. Seda kasutatakse sageli koos Foreign Key piiranguga.
 
-**Erinevus teistest võtmetest:**
-Compound Key on sarnane Composite Key’ga, aga selle veerud on tavaliselt Foreign Key’d.
+### Kasutus
 
-**SQL näide:**
+* Seostabelites.
+* Kui tabel peab viitama mitme veeru kombinatsioonile.
+* Keerulisemate tabeliseoste loomiseks.
+
+### Erinevus
+
+* Sarnaneb Composite Key’ga.
+* Tavaliselt kasutatakse seda koos Foreign Key’ga.
+* Compound Key võib viidata teise tabeli mitme veeru võtmele.
+
+### Näide
+
+Kõigepealt luuakse tabel `opilane_kursus`, kus primaarvõti koosneb kahest veerust.
 
 ```sql
-IF OBJECT_ID('dbo.Registreerimised_COMP', 'U') IS NOT NULL
-DROP TABLE dbo.Registreerimised_COMP;
-
-IF OBJECT_ID('dbo.Opilased_COMP', 'U') IS NOT NULL
-DROP TABLE dbo.Opilased_COMP;
-
-IF OBJECT_ID('dbo.Kursused_COMP', 'U') IS NOT NULL
-DROP TABLE dbo.Kursused_COMP;
-
-CREATE TABLE Opilased_COMP (
-    opilane_id INT IDENTITY(1,1),
-    nimi VARCHAR(50),
-    CONSTRAINT PK_Opilased_COMP PRIMARY KEY (opilane_id)
+CREATE TABLE opilane_kursus(
+    opilane_id INT,
+    kursus_id INT,
+    PRIMARY KEY (opilane_id, kursus_id)
 );
 
-CREATE TABLE Kursused_COMP (
-    kursus_id INT IDENTITY(1,1),
-    kursuse_nimi VARCHAR(50),
-    CONSTRAINT PK_Kursused_COMP PRIMARY KEY (kursus_id)
-);
+INSERT INTO opilane_kursus
+VALUES (1, 1), (2, 2);
 
-CREATE TABLE Registreerimised_COMP (
-    opilane_id INT NOT NULL,
-    kursus_id INT NOT NULL,
-    kuupaev DATE,
-    CONSTRAINT PK_Registreerimised_COMP PRIMARY KEY (opilane_id, kursus_id),
-    CONSTRAINT FK_Reg_Opilane_COMP FOREIGN KEY (opilane_id)
-    REFERENCES Opilased_COMP(opilane_id),
-    CONSTRAINT FK_Reg_Kursus_COMP FOREIGN KEY (kursus_id)
-    REFERENCES Kursused_COMP(kursus_id)
-);
-
-EXEC sp_help 'Registreerimised_COMP';
+SELECT * FROM opilane_kursus;
 ```
 
-**Lisa siia ekraanipilt, kus on näha Compound Key.**
+Seejärel luuakse tabel `hinne`, kus kasutatakse võõrvõtit kahe veeru põhjal.
+
+```sql
+CREATE TABLE hinne(
+    hinne_id INT PRIMARY KEY IDENTITY(1,1),
+    opilane_id INT,
+    kursus_id INT,
+    hinne INT,
+    FOREIGN KEY (opilane_id, kursus_id)
+    REFERENCES opilane_kursus(opilane_id, kursus_id)
+);
+
+INSERT INTO hinne
+VALUES (1, 1, 5), (2, 2, 4);
+
+SELECT * FROM hinne;
+```
+
+Kui proovida lisada kombinatsioon, mida tabelis `opilane_kursus` ei ole, tekib Foreign Key viga.
+
+```sql
+INSERT INTO hinne
+VALUES (1, 2, 5);
+```
 
 ---
 
-## 7. Superkey
+## Superkey
 
-**Definitsioon:**
-Superkey on veerg või veergude kogum, millega saab tabeli rea üheselt tuvastada.
+### Definitsioon
 
-**Milleks kasutatakse:**
-Seda kasutatakse teoreetiliselt selleks, et näidata kõiki võimalikke viise rea tuvastamiseks.
+Superkey on üks või mitu veergu, mille abil saab tabeli rea unikaalselt tuvastada. Superkey võib sisaldada ka üleliigseid veerge.
 
-**Erinevus teistest võtmetest:**
-Superkey ei pea olema minimaalne. See tähendab, et selles võib olla rohkem veerge kui tegelikult vaja.
+### Kasutus
 
-**SQL näide:**
+* Tabeli ridade unikaalseks tuvastamiseks.
+* Teoreetilise võtme mõistena.
+* Candidate Key leidmiseks.
+
+### Erinevus
+
+* Superkey võib sisaldada üleliigseid veerge.
+* Candidate Key on minimaalne Superkey.
+* Iga Candidate Key on Superkey, aga iga Superkey ei ole Candidate Key.
+
+### Näide
+
+Tabelis `inimene` saab rida otsida `id` järgi, `email` järgi või kombinatsiooniga `id + email`.
 
 ```sql
-IF OBJECT_ID('dbo.Superkey_Naide', 'U') IS NOT NULL
-DROP TABLE dbo.Superkey_Naide;
-
-CREATE TABLE Superkey_Naide (
-    opilane_id INT IDENTITY(1,1),
-    isikukood VARCHAR(11) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    nimi VARCHAR(50),
-    CONSTRAINT PK_Superkey_Naide PRIMARY KEY (opilane_id),
-    CONSTRAINT UQ_Superkey_Isikukood UNIQUE (isikukood),
-    CONSTRAINT UQ_Superkey_IsikukoodEmail UNIQUE (isikukood, email)
+CREATE TABLE inimene(
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nimi VARCHAR(30),
+    email VARCHAR(50) UNIQUE
 );
 
-EXEC sp_help 'Superkey_Naide';
+INSERT INTO inimene
+VALUES
+('Robert', 'robert@gmail.com'),
+('Mark', 'mark@gmail.com'),
+('Daniil', 'daniil@gmail.com');
+
+SELECT * FROM inimene;
+SELECT * FROM inimene WHERE id = 1;
+SELECT * FROM inimene WHERE email = 'mark@gmail.com';
+SELECT * FROM inimene WHERE id = 3 AND email = 'daniil@gmail.com';
 ```
 
-**Selgitus:**
-`isikukood` on juba unikaalne. Seega `(isikukood, email)` on superkey, aga mitte minimaalne võti.
-
-**Lisa siia ekraanipilt, kus on näha Superkey näide.**
+Näiteks `id + email` on Superkey, sest selle abil saab rea unikaalselt leida. Samas on seal üks üleliigne veerg, sest ainult `id` oleks juba piisav.
 
 ---
 
-## 8. Candidate Key
+## Candidate Key
 
-**Definitsioon:**
-Candidate Key on minimaalne võti, mis sobib rea üheseks tuvastamiseks.
+### Definitsioon
 
-**Milleks kasutatakse:**
-Seda kasutatakse selleks, et valida, milline võti saab Primary Key’ks.
+Candidate Key on minimaalne võti, mis sobib tabeli rea unikaalseks tuvastamiseks.
 
-**Erinevus teistest võtmetest:**
-Candidate Key on minimaalne. Superkey võib sisaldada liigseid veerge, aga Candidate Key mitte.
+### Kasutus
 
-**SQL näide:**
+* Primary Key valimiseks.
+* Võimalike unikaalsete identifikaatorite leidmiseks.
+* Andmebaasi planeerimisel.
+
+### Erinevus
+
+* Candidate Key ei sisalda üleliigseid veerge.
+* Superkey võib sisaldada üleliigseid veerge.
+* Üks Candidate Key valitakse tavaliselt Primary Key’ks.
+
+### Näide
+
+Tabelis `telefon` on `tel_id` Candidate Key, sest see on iga rea jaoks unikaalne.
 
 ```sql
-IF OBJECT_ID('dbo.Kandidaatvotmed', 'U') IS NOT NULL
-DROP TABLE dbo.Kandidaatvotmed;
-
-CREATE TABLE Kandidaatvotmed (
-    opilane_id INT IDENTITY(1,1),
-    isikukood VARCHAR(11) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    nimi VARCHAR(50),
-    CONSTRAINT PK_Kandidaatvotmed PRIMARY KEY (opilane_id),
-    CONSTRAINT UQ_Kandidaat_Isikukood UNIQUE (isikukood),
-    CONSTRAINT UQ_Kandidaat_Email UNIQUE (email)
+CREATE TABLE telefon(
+    tel_id INT PRIMARY KEY IDENTITY(1,1),
+    mudel VARCHAR(50),
+    kogus INT,
+    pood VARCHAR(30)
 );
 
-EXEC sp_help 'Kandidaatvotmed';
+INSERT INTO telefon
+VALUES
+('iPhone 14', 10, 'T1'),
+('Samsung S23', 5, 'Mustikas'),
+('Nokia 3310', 2, 'Ulemiste');
+
+SELECT * FROM telefon;
 ```
 
-**Selgitus:**
-Selles tabelis võivad kandidaadvõtmed olla `opilane_id`, `isikukood` ja `email`, sest igaüks neist saab rea üheselt tuvastada.
-
-**Lisa siia ekraanipilt, kus on näha Candidate Key näide.**
+`tel_id` sobib kandidaadvõtmeks, sest selle abil saab iga rea eraldi tuvastada.
 
 ---
 
-## 9. Alternate Key
+## Alternate Key
 
-**Definitsioon:**
-Alternate Key on kandidaadvõti, mida ei valitud Primary Key’ks.
+### Definitsioon
 
-**Milleks kasutatakse:**
-Seda kasutatakse andmete unikaalsuse kontrollimiseks, kui Primary Key on juba valitud.
+Alternate Key on Candidate Key, mida ei valitud Primary Key’ks.
 
-**Erinevus teistest võtmetest:**
-Primary Key on põhiline valitud võti. Alternate Key on teine võimalik unikaalne võti.
+### Kasutus
 
-**SQL näide:**
+* Alternatiivseks rea otsimiseks.
+* Teiste veergude unikaalsuse tagamiseks.
+* Duplikaatide vältimiseks.
+
+### Erinevus
+
+* Primary Key on peamine valitud võti.
+* Alternate Key on teine võimalik unikaalne võti.
+* SQL-is tehakse seda tavaliselt `UNIQUE` piiranguga.
+
+### Näide
+
+Tabelis `telefon_alt` on `tel_id` Primary Key. Veerud `mudel`, `kogus` ja `pood` on unikaalsed, seega neid saab kasutada Alternate Key näidetena.
 
 ```sql
-IF OBJECT_ID('dbo.Alternatiivvoti', 'U') IS NOT NULL
-DROP TABLE dbo.Alternatiivvoti;
-
-CREATE TABLE Alternatiivvoti (
-    opilane_id INT IDENTITY(1,1),
-    isikukood VARCHAR(11) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    nimi VARCHAR(50),
-    CONSTRAINT PK_Alternatiivvoti PRIMARY KEY (opilane_id),
-    CONSTRAINT AK_Alternatiiv_Isikukood UNIQUE (isikukood)
+CREATE TABLE telefon_alt(
+    tel_id INT PRIMARY KEY IDENTITY(1,1),
+    mudel VARCHAR(50) UNIQUE,
+    kogus INT UNIQUE,
+    pood VARCHAR(30) UNIQUE
 );
 
-EXEC sp_help 'Alternatiivvoti';
+INSERT INTO telefon_alt
+VALUES
+('iPhone 14', 10, 'T1'),
+('iPhone 15', 11, 'Kristiine Keskus'),
+('Samsung S23', 5, 'Mustikas'),
+('Nokia 3310', 2, 'Ulemiste');
+
+SELECT * FROM telefon_alt;
 ```
 
-**Selgitus:**
-`opilane_id` on Primary Key. `isikukood` on Alternate Key, sest see on samuti unikaalne, aga seda ei valitud Primary Key’ks.
-
-**Lisa siia ekraanipilt, kus on näha Alternate Key.**
+Selles tabelis on `tel_id` Primary Key. Teised unikaalsed veerud on Alternate Key näited.
 
 ---
 
 ## Kokkuvõte
 
-Selles töös õppisin, et andmebaasi võtmed aitavad andmeid korrastada ja kontrollida. Primary Key tuvastab rea, Foreign Key seob tabeleid ja Unique Key keelab korduvad väärtused. Composite ja Compound Key kasutavad mitut veergu. Superkey, Candidate Key ja Alternate Key on rohkem teoreetilised mõisted, aga neid saab näidata SQL-is unikaalsete piirangute kaudu.
+Selles töös õppisin erinevaid andmebaasi võtmeid. Primary Key tuvastab tabelis iga rea. Foreign Key seob erinevaid tabeleid. Unique Key keelab korduvad väärtused. Simple Key koosneb ühest veerust, aga Composite Key ja Compound Key kasutavad mitut veergu. Superkey, Candidate Key ja Alternate Key aitavad paremini aru saada, kuidas tabeli ridu unikaalselt tuvastada.
 
 ---
 
-## Kasutatud allikad
-
-* [Microsoft Learn - Primary and foreign key constraints](https://learn.microsoft.com/en-us/sql/relational-databases/tables/primary-and-foreign-key-constraints?view=sql-server-ver17)
-* [Microsoft Learn - Unique constraints and check constraints](https://learn.microsoft.com/en-us/sql/relational-databases/tables/unique-constraints-and-check-constraints?view=sql-server-ver17)
-* [Microsoft Learn - Create foreign key relationships](https://learn.microsoft.com/en-us/sql/relational-databases/tables/create-foreign-key-relationships?view=sql-server-ver17)
-* [W3Schools - SQL Primary Key](https://www.w3schools.com/sql/sql_primarykey.asp)
-* [W3Schools - SQL Foreign Key](https://www.w3schools.com/sql/sql_foreignkey.asp)
-* [W3Schools - SQL Unique](https://www.w3schools.com/sql/sql_unique.asp)
+##

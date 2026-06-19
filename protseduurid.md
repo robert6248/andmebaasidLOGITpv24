@@ -210,37 +210,16 @@ EXEC muudatus 'drop', 'categories', 'TestVeerg';
 
 ---
 
-# Hindeline ülesanne SQL Serveris
-
-## Andmebaasi ja tabeli loomine
-
-Töö alguses lõin uue andmebaasi ja valisin selle kasutamiseks.
+Veeru kustutamine:
 
 ```sql
-CREATE DATABASE ProtseduurRobert;
-USE ProtseduurRobert;
+EXEC muudatus 'drop', 'categories', 'testVeerg';
+
+SELECT * FROM categories;
 ```
 
-Seejärel lõin tabeli `klient`.
+Pärast käsu käivitamist on näha, et veerg `testVeerg` kustutati tabelist `categories`.
 
-```sql
-CREATE TABLE klient (
-    id INT PRIMARY KEY IDENTITY(1,1),
-    nimi VARCHAR(25) NOT NULL,
-    linn VARCHAR(20),
-    vanus INT,
-    saldo MONEY
-);
-```
-
-Lisasin tabelisse ühe kliendi.
-
-```sql
-INSERT INTO klient(nimi, linn, vanus, saldo)
-VALUES ('Ada Vong', 'Tartu', 55, 14.8);
-
-SELECT * FROM klient;
-```
 
 <img width="518" height="165" alt="image" src="https://github.com/user-attachments/assets/3fbb5fa8-b788-4667-bd7b-aa0d0bc5af40" />
 

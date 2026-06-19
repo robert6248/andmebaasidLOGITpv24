@@ -135,7 +135,8 @@ ON deleted.linnID = inserted.linnID;
 
 Triggeri kontrollimiseks muudetakse tabelis `linnad` olemasolevat kirjet. Pärast muutmist on tabelis `logi` näha, millised olid vanad ja uued andmed.
 
-<img width="929" height="357" alt="{9B8D109A-4074-40F8-9558-AD4A9A9457E9}" src="https://github.com/user-attachments/assets/055a86c8-7df3-47b6-8c33-db8f432544a2" />
+<img width="1057" height="380" alt="image" src="https://github.com/user-attachments/assets/773951b3-f63c-4585-96d3-93ed3de8cd62" />
+
 
 ---
 

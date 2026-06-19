@@ -1,3 +1,5 @@
+Вот полный код **с твоим новым оформлением и со всеми фотками внутри**.
+
 # Triggerid
 
 [Põhimõisted](readme.md) | [Kasutajad](Kasutaja.md) | [Trigerid](triger.md) | [Protseduurid](protseduurid.md) | [Keys](Keys.md)
@@ -55,6 +57,8 @@ Näites lisatakse tabelisse `linnad` uus kirje. Pärast seda tekib tabelisse `lo
 
 ### Ekraanipilt
 
+<img width="562" height="183" alt="{C8FCA455-37F9-47D7-855F-354DA6667EBE}" src="https://github.com/user-attachments/assets/8823546b-9f4a-4273-b0bc-a81cea43646a" />
+
 ---
 
 # DELETE trigger
@@ -97,6 +101,8 @@ WHERE linnID = 3;
 Pildil on näha, et pärast kustutamist tekkis tabelisse `logi` vastav kirje.
 
 ### Ekraanipilt
+
+<img width="563" height="180" alt="{16DE1A83-7BB8-42D7-ABF9-A142917E6D77}" src="https://github.com/user-attachments/assets/57a762fc-b1f8-4be3-aeed-7878461af8ae" />
 
 ---
 
@@ -152,11 +158,15 @@ Pildil on näha kõik loodud triggerid SQL Serveri andmebaasis.
 
 ### Ekraanipilt
 
+<img width="198" height="163" alt="{172A794F-B89F-4810-A91C-A6696DC837CE}" src="https://github.com/user-attachments/assets/dc3d24c4-4dc5-43bb-9213-72a7666b22c5" />
+
 ## Kombineeritud triggeri kontroll
 
 Pildil on näha, et kombineeritud trigger töötab korrektselt ja salvestab tegevused logitabelisse.
 
 ### Ekraanipilt
+
+<img width="1051" height="376" alt="image" src="https://github.com/user-attachments/assets/811a3ae6-98cf-48f3-a9ce-c91c1f079399" />
 
 ---
 
@@ -203,6 +213,8 @@ UPDATE trigger kasutab kahte süsteemset tabelit:
 Pildil on näha, et pärast andmete muutmist salvestati logitabelisse vanad ja uued väärtused.
 
 ### Ekraanipilt
+
+<img width="1057" height="380" alt="image" src="https://github.com/user-attachments/assets/773951b3-f63c-4585-96d3-93ed3de8cd62" />
 
 ---
 

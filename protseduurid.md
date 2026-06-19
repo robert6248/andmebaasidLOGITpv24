@@ -354,28 +354,7 @@ SELECT * FROM klient;
 
 ---
 
-## Protseduur kliendi otsimiseks
 
-See protseduur otsib klienti nime alguse järgi.
-
-```sql
-CREATE PROCEDURE OtsiKlient
-    @nimi VARCHAR(10)
-AS
-BEGIN
-    SELECT *
-    FROM klient
-    WHERE nimi LIKE @nimi + '%';
-END;
-```
-
-Käivitamine:
-
-```sql
-EXEC OtsiKlient @nimi = 'J';
-```
-
----
 
 
 ---

@@ -104,7 +104,7 @@ Selle triggeriga saab jÃ¤lgida kahte tegevust korraga. Kui lisatakse uus linn vÃ
 
 ### Kombineeritud triggeri kontroll
 
-<img width="911" height="363" alt="{42D1FBED-5ADE-42D4-98D1-323C2582AC85}" src="https://github.com/user-attachments/assets/4dc1b2f1-3615-4db0-a707-f40d19a9f2ce" />
+<img width="1051" height="376" alt="image" src="https://github.com/user-attachments/assets/811a3ae6-98cf-48f3-a9ce-c91c1f079399" />
 
 ---
 

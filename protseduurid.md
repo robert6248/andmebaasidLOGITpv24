@@ -428,4 +428,8 @@ SELECT * FROM klient;
 
 ---
 
-#
+# Kokkuvõte
+
+Selles töös õppisin kasutama SQL protseduure andmete lisamiseks, muutmiseks, kustutamiseks ja otsimiseks. Samuti õppisin looma protseduure, mis muudavad tabeli struktuuri ning kasutavad parameetreid ja dünaamilist SQL-i.
+
+Lisaks sain aru erinevusest SQL Serveri ja XAMPP/MySQL-i vahel: SQL Serveris kasutatakse automaatse ID loomiseks `IDENTITY`, samas kui MySQL-is kasutatakse `AUTO_INCREMENT`.
